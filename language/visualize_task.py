@@ -55,7 +55,7 @@ def load_dataframe(
     Returns:
         pd dataframe
     """
-    fpath = os.path.join(DATA_DIR, 'task_data_all.csv')
+    fpath = os.path.join(DATA_DIR, 'NOL_data.csv')
     if not os.path.isfile(fpath):
         task = Task()
         task.preprocess(bad_subjs=bad_subjs)

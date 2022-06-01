@@ -19,14 +19,14 @@ def load_dataframe(
     """
     ana = Participants()
 
-    fpath = os.path.join(DATA_DIR, 'participant_info.csv')
+    fpath = os.path.join(DATA_DIR, 'NOL_participant_info.csv')
     if not os.path.exists(fpath):
         ana.preprocess(bad_subjs=bad_subjs)
     df = pd.read_csv(fpath)
 
     # drop "bad" subjects
     if bad_subjs is not None:
-        df = df[~df['public_id'].isin(bad_subjs)]
+        df = df[~df['participant_id'].isin(bad_subjs)]
 
     return df
 
@@ -37,7 +37,6 @@ def yoe_dist(dataframe):
 
     dist = sns.FacetGrid(dataframe, hue="group")
     dist = dist.map(sns.distplot, "years_of_education", hist=False, rug=True)
-    plt.legend(group, fontsize=10)
     plt.xlabel('Years of Education', fontsize=20)
     plt.title(f'Distribution of years of education for participants', fontsize=20);
     plt.xticks(fontsize=10)
@@ -52,8 +51,7 @@ def age_dist(dataframe):
     sns.set(rc={'figure.figsize':(20,10)})
 
     dist = sns.FacetGrid(dataframe, hue="group")
-    dist = dist.map(sns.distplot, "age", hist=False, rug=True)
-    plt.legend(group, fontsize=10)           
+    dist = dist.map(sns.distplot, "age", hist=False, rug=True)         
     plt.title(f'Distribution of age for participants', fontsize=20);
     plt.xlabel('Age', fontsize=20)
     plt.xticks(fontsize=10)
@@ -80,8 +78,7 @@ def moca_dist(dataframe):
     sns.set(rc={'figure.figsize':(20,10)})
 
     dist = sns.FacetGrid(dataframe, hue="group")
-    dist = dist.map(sns.distplot, "MOCA_total_score", hist=False, rug=True)
-    plt.legend(group, fontsize=10)           
+    dist = dist.map(sns.distplot, "MOCA_total_score", hist=False, rug=True)          
     plt.title(f'Distribution of MoCA scores for participants', fontsize=20)
     plt.xlabel('MoCA score (out of 29)', fontsize=20)
     plt.xticks(fontsize=10)
@@ -95,8 +92,7 @@ def sara_dist(dataframe):
     sns.set(rc={'figure.figsize':(20,10)})
 
     dataframe = dataframe.query('group == "SCA"')
-    sns.distplot(dataframe["SARA_total_score"], hist=False, rug=True)
-    plt.legend(group, fontsize=10)           
+    sns.distplot(dataframe["SARA_total_score"], hist=False, rug=True)          
     plt.title(f'Distribution of SARA scores for participants', fontsize=20);
     plt.xlabel('SARA score (out of 40)', fontsize=20)
     plt.xticks(fontsize=10)
